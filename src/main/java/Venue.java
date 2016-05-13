@@ -123,7 +123,7 @@ public class Venue {
 
   public static List<Venue> search(String searchQuery) {
     try(Connection con = DB.sql2o.open()) {
-      String search = "SELECT * FROM bands WHERE lower(band_name) LIKE :searchQuery;";
+      String search = "SELECT * FROM venues WHERE lower(venue_name) LIKE :searchQuery;";
       return con.createQuery(search)
         .addParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
         .executeAndFetch(Venue.class);

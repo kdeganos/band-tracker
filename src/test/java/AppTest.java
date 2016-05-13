@@ -17,20 +17,36 @@ public class AppTest extends FluentTest{
 
   @Override
   public WebDriver getDefaultDriver() {
-   return webDriver;
- }
+    return webDriver;
+  }
 
- @ClassRule
- public static ServerRule server = new ServerRule();
+  @ClassRule
+  public static ServerRule server = new ServerRule();
 
- @Rule
-public DatabaseRule database = new DatabaseRule();
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
 
- // @Test
- // public void rootTest() {
- //   goTo("http://localhost:4567/");
- //   fill("#???").with("?");
- //   submit(".btn");
- //   assertThat(pageSource()).contains("what you want to be found related to your method");
- // }
+  @Test
+  public void rootTest() {
+    goTo("http://localhost:4567/");
+    assertThat(pageSource()).contains("Band Tracker");
+  }
+
+  @Test
+  public void listBands() {
+    Band testBand = new Band("Name 1");
+    testBand.save();
+    goTo("http://localhost:4567/");
+    click("a", withText("View All Bands"));
+    assertThat(pageSource()).contains("Name 1");
+  }
+
+  // @Test
+  // public void addBand() {
+  //   goTo("http://localhost:4567/");
+  //   click("a", withText("Add A Band"));
+  //   fill("#name").with("Name 1");
+  //   submit("#submitBand");
+  //   assertThat(pageSource()).contains("Name 1");
+  // }
 }
