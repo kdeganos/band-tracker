@@ -1,37 +1,26 @@
-# _{Application Name}_
+# Band Tracker
 
-#### _{Brief description of application}, {Date of current version}_
+#### Advanced Databases Independent Project for Epicodus, 05/13/2016
 
-#### By _**{List of contributors}**_
+#### By **Kevin Deganos**
 
 ## Description
 
-_{This is a detailed description of your application. Its purpose and usage.  Give as much detail as needed to explain what the application does, and any other information you want users or other developers to have. }_
+Website for tracking bands and venues. A user can add bands and venues as well as associate venues with bands. Bands and venues are searchable.
 
 ## Setup/Installation Requirements
 
-* _This is a great place_
-* _to list setup instructions_
-* _in a simple_
-* _easy-to-understand_
-* _format_
-
-_{Leave nothing to chance! You want it to be easy for potential users, employers and collaborators to run your app. Do I need to run a server? How should I set up my databases? Is there other code this app depends on?}_
-
-## Known Bugs
-
-_{Are there issues that have not yet been resolved that you want to let users know you know?  Outline any issues that would impact use of your application.  Share any workarounds that are in place. }_
-
-## Support and contact details
-
-_{Let people know what to do if they run into any issues or have questions, ideas or concerns.  Encourage them to contact you or make a contribution to the code.}_
-
-## Technologies Used
-
-_{Tell me about the languages and tools you used to create this app. Assume that I know you probably used HTML and CSS. If you did something really cool using only HTML, point that out.}_
+* This website was created with Java, Spark Framework, Apache Velocity, Bootstrap, Animate.css, and PostgreSQL
+* In PSQL:
+  * CREATE DATABASE band\_tracker;
+  * \\c band\_tracker;
+  * CREATE TABLE bands (id serial PRIMARY KEY, name varchar);
+  * CREATE TABLE venues (id serial PRIMARY KEY, name varchar);
+  * CREATE TABLE bands_venues (id serial PRIMARY KEY, band_id int, venue_id int);
+  * CREATE DATABASE band\_tracker\_test WITH TEMPLATE band\_tracker;
 
 ### License
 
-*{Determine the license under which this application can be used.  See below for more details on licensing.}*
+*Code released under the MIT license.*
 
-Copyright (c) 2015 **_{List of contributors or company name}_**
+Copyright (c) 2016 **Kevin Deganos**
