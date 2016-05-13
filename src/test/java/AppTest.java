@@ -49,4 +49,13 @@ public class AppTest extends FluentTest{
     submit("#submitBand");
     assertThat(pageSource()).contains("Name 1");
   }
+
+  @Test
+  public void listVenues() {
+    Venue testVenue = new Venue("Name 1");
+    testVenue.save();
+    goTo("http://localhost:4567/");
+    click("a", withText("View All Venues"));
+    assertThat(pageSource()).contains("Name 1");
+  }
 }
