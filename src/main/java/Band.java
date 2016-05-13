@@ -47,7 +47,7 @@ public class Band {
     }
   }
 
-  public static Band findById(int id) {
+  public static Band find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM bands WHERE id=:id;";
       return con.createQuery(sql)
@@ -73,9 +73,9 @@ public class Band {
 
   public void update(String new_name) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE bands SET name=:name WHERE id=:id;";
+      String sql = "UPDATE bands SET name=:new_name WHERE id=:id;";
       con.createQuery(sql)
-        .addParameter("name", new_name)
+        .addParameter("new_name", new_name)
         .addParameter("id", this.id)
         .executeUpdate();
     }

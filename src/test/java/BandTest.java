@@ -14,7 +14,7 @@ public class BandTest {
     assertTrue(testBand instanceof Band);
   }
 
-  @Test public void getBandName_returnsBandName_String() {
+  @Test public void getName_returnsName_String() {
     Band testBand = new Band("Name 1");
     assertEquals("Name 1", testBand.getName());
   }
@@ -36,5 +36,30 @@ public class BandTest {
     Band testBand = new Band("Name 1");
     testBand.save();
     Band savedBand = Band.all().get(0);
+  }
+
+  @Test
+  public void find_findsInstanceById_Band() {
+    Band testBand = new Band("Name 1");
+    testBand.save();
+    Band foundBand = Band.find(testBand.getId());
+    assertTrue(foundBand.equals(testBand));
+  }
+
+  @Test
+  public void delete_deletesInstanceFromTable() {
+    Band testBand = new Band("Name 1");
+    testBand.save();
+    testBand.delete();
+    assertEquals(0, Band.all().size());
+  }
+
+  @Test
+  public void update_updatesInstance_String() {
+    Band testBand = new Band("Name 1");
+    testBand.save();
+    testBand.update("Name 2");
+    Band updatedBand = Band.find(testBand.getId());
+    assertEquals("Name 2", updatedBand.getName());
   }
 }
