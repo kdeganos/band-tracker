@@ -27,7 +27,8 @@ public class Band {
     }
   }
 
-  @Override public boolean equals(Object otherBand) {
+  @Override
+  public boolean equals(Object otherBand) {
     if(!(otherBand instanceof Band)) {
       return false;
     } else {
@@ -93,22 +94,13 @@ public class Band {
 
   public List<Venue> getVenues() {
     try(Connection con = DB.sql2o.open()) {
-      String joinQuery = "SELECT venues.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE venues.id = :id;";
+      String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE bands.id = :id;";
       return con.createQuery(joinQuery)
         .addParameter("id" , this.id)
         .executeAndFetch(Venue.class);
     }
   }
-  //
-  // public List<Venue> listAvailableVenues() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id != venues.id) WHERE bands.id = :id;";
-  //     return con.createQuery(joinQuery)
-  //       .addParameter("id", this.id)
-  //       .executeAndFetch(Venue.class);
-  //   }
-  // }
-  //
+
   // public void removeVenue(int venueId) {
   //   try(Connection con = DB.sql2o.open()) {
   //     String removeQuery = "DELETE FROM bands_venues WHERE venue_id=:venue_id AND band_id=:band_id;";
@@ -118,7 +110,16 @@ public class Band {
   //       .executeUpdate();
   //   }
   // }
-
+  // 
+  // public List<Venue> listAvailableVenues() {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id != venues.id) WHERE bands.id = :id;";
+  //     return con.createQuery(joinQuery)
+  //       .addParameter("id", this.id)
+  //       .executeAndFetch(Venue.class);
+  //   }
+  // }
+  //
   public static List<Band> search(String searchQuery) {
     try(Connection con = DB.sql2o.open()) {
       String search = "SELECT * FROM bands WHERE lower(band_name) LIKE :searchQuery;";

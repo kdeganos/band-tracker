@@ -63,6 +63,7 @@ public class BandTest {
     assertEquals("Name 2", updatedBand.getName());
   }
 
+  @Test
   public void addVenue_joinsBandAndVenue_true() {
     Band testBand = new Band("Name 1");
     testBand.save();
@@ -73,6 +74,18 @@ public class BandTest {
     assertTrue(testVenue.equals(joinedVenue));
   }
 
-  // @Test
-  // public void getVenues_
+  @Test
+  public void getVenues_returnsAllAssociatedVenues_int() {
+    Band testBand = new Band("Name 1");
+    testBand.save();
+    Venue testVenue = new Venue("Name 2");
+    testVenue.save();
+    testBand.addVenue(testVenue);
+    Venue testVenue2 = new Venue("Name 3");
+    testVenue2.save();
+    testBand.addVenue(testVenue2);
+    Venue joinedVenue = testBand.getVenues().get(0);
+    assertTrue(testVenue.equals(joinedVenue));
+    // assertEquals(0, testBand.getVenues().size());
+  }
 }

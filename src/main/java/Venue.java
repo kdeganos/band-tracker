@@ -27,7 +27,8 @@ public class Venue {
     }
   }
 
-  @Override public boolean equals(Object otherVenue) {
+  @Override
+  public boolean equals(Object otherVenue) {
     if(!(otherVenue instanceof Venue)) {
       return false;
     } else {
