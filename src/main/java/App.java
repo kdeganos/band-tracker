@@ -29,13 +29,23 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/add-band/error", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();      model.put("formError", true);
+      model.put("template", "templates/add-band.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/add-band", (request, response) -> {
       String name = request.queryParams("name");
 
-      Band newBand = new Band(name);
-      newBand.save();
+      if(name.equals("")) {
+        response.redirect("/add-band/error");
+      } else {
+        Band newBand = new Band(name);
+        newBand.save();
 
-      response.redirect("/band/" + newBand.getId());
+        response.redirect("/band/" + newBand.getId());
+      }
       return null;
     });
 
@@ -61,13 +71,24 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/add-venue/error", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("formError", true);
+      model.put("template", "templates/add-venue.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/add-venue", (request, response) -> {
       String name = request.queryParams("name");
 
-      Venue newVenue = new Venue(name);
-      newVenue.save();
+      if(name.equals("")) {
+        response.redirect("/add-venue/error");
+      } else {
+        Venue newVenue = new Venue(name);
+        newVenue.save();
 
-      response.redirect("/venue/" + newVenue.getId());
+        response.redirect("/venue/" + newVenue.getId());
+      }
       return null;
     });
 

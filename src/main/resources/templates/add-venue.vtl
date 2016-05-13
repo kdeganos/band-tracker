@@ -1,5 +1,9 @@
 <h1>Add a Venue</h1>
 
+#if ($formError)
+<h3 class="animated flash error">Please be sure to enter a Venue Name</h3>
+#end
+
 <form action="/add-venue" method="post">
   <label for="name">Venue Name</label>
   <input type="text" id="name" name="name">

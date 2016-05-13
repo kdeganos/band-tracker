@@ -67,4 +67,21 @@ public class AppTest extends FluentTest{
     submit("#submitVenue");
     assertThat(pageSource()).contains("Name 1");
   }
+
+  @Test
+  public void addBandFormError() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add A Band"));
+    submit("#submitBand");
+    assertThat(pageSource()).contains("Please be sure");
+  }
+
+  @Test
+  public void addVenueFormError() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add A Venue"));
+    submit("#submitVenue");
+    assertThat(pageSource()).contains("Please be sure");
+  }
+
 }
