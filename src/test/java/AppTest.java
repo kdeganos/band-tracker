@@ -84,4 +84,41 @@ public class AppTest extends FluentTest{
     assertThat(pageSource()).contains("Please be sure");
   }
 
+  @Test
+  public void editBand() {
+    Band testBand = new Band ("Name 1");
+    testBand.save();
+    goTo("http://localhost:4567/band/" + testBand.getId() + "/edit");
+    fill("#name").with("Name 2");
+    submit(".btn-success");
+    assertThat(pageSource()).contains("Name 2");
+  }
+
+  @Test
+  public void editVenue() {
+    Venue testVenue = new Venue ("Name 1");
+    testVenue.save();
+    goTo("http://localhost:4567/venue/" + testVenue.getId() + "/edit");
+    fill("#name").with("Name 2");
+    submit(".btn-success");
+    assertThat(pageSource()).contains("Name 2");
+  }
+
+  @Test
+  public void deleteBand() {
+    Band testBand = new Band ("Name 1");
+    testBand.save();
+    goTo("http://localhost:4567/band/" + testBand.getId() + "/edit");
+    click(".btn-danger");
+    assertThat(pageSource()).doesNotContain("Name 1");
+  }
+
+  @Test
+  public void deleteVenue() {
+    Venue testVenue = new Venue ("Name 1");
+    testVenue.save();
+    goTo("http://localhost:4567/venue/" + testVenue.getId() + "/edit");
+    click(".btn-danger");
+    assertThat(pageSource()).doesNotContain("Name 1");
+  }
 }

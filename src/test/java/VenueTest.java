@@ -99,4 +99,19 @@ public class VenueTest {
     testVenue.removeBand(testBand.getId());
     assertEquals(0, testVenue.getBands().size());
   }
+
+  @Test
+  public void search_findSetOfVenuesByKeyword_list() {
+    Venue testVenue = new Venue("abcde");
+    testVenue.save();
+    Venue testVenue2 = new Venue("cdefg");
+    testVenue2.save();
+    Venue testVenue3 = new Venue("vwxyz");
+    testVenue3.save();
+    Venue testVenue4 = new Venue("rstuvwx");
+    testVenue4.save();
+    List<Venue> testSearch = Venue.search("vWx");
+    assertTrue(testSearch.get(0).equals(testVenue3));
+    assertEquals(testSearch.size(), 2);
+  }
 }

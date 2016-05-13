@@ -1,8 +1,28 @@
 <h1>$band.getName()</h1>
 
+#if ($new)
+  <h4 class="success animated flash">Band successfully added</h4>
+#end
 
-<a href="/add-band">Add a Band</a>
-<a href="/list-bands">List All Bands</a>
-<a href="/add-venue">Add a Venue</a>
-<a href="/list-venues">List All Venues</a>
-<a href="/">Home</a>
+#if ($update)
+  <h4 class="success animated flash">Band successfully updated</h4>
+#end
+
+<h3>Venues:</h3>
+#foreach ($venue in $venues)
+  <a href="/venue/$venue.getId()">$venue.getName()</a>
+  <br>
+#end
+<hr>
+<a class="edit" href="/associate/venues/$band.getId()">Edit Venues for $band.getName()</a>
+<br>
+
+<a class="edit" href="/band/$band.getId()/edit">Edit or Delete $band.getName()</a>
+<br>
+
+<hr>
+<a class="bottomNav" href="/add-band">Add a Band</a>
+<a class="bottomNav" href="/list-bands">View All Bands</a>
+<a class="bottomNav" href="/add-venue">Add a Venue</a>
+<a class="bottomNav" href="/list-venues">View All Venues</a>
+<a class="bottomNav" href="/">Home</a>

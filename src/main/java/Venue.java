@@ -111,19 +111,9 @@ public class Venue {
     }
   }
 
-  // public List<Venue> listAvailableVenues() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id != venues.id) WHERE bands.id = :id;";
-  //     return con.createQuery(joinQuery)
-  //       .addParameter("id", this.id)
-  //       .executeAndFetch(Venue.class);
-  //   }
-  // }
-  //
-
   public static List<Venue> search(String searchQuery) {
     try(Connection con = DB.sql2o.open()) {
-      String search = "SELECT * FROM venues WHERE lower(venue_name) LIKE :searchQuery;";
+      String search = "SELECT * FROM venues WHERE lower(name) LIKE :searchQuery;";
       return con.createQuery(search)
         .addParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
         .executeAndFetch(Venue.class);

@@ -1,0 +1,20 @@
+<h1>Edit Venues for $band.getName()</h1>
+
+<form action="/associate/venues/$band.getId()" method="post">
+  #foreach ($venue in $venues)
+    #if ($band.getVenues().contains($venue))
+      <input type="checkbox" name="venues" value="$venue.getId()" checked>$venue.getName()<br>
+    #else
+    <input type="checkbox" name="venues" value="$venue.getId()">$venue.getName()<br>
+    #end
+  #end
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+<br>
+
+<hr>
+<a class="bottomNav" href="/list-bands">View All Bands</a>
+<a class="bottomNav" href="/add-band">Add a Band</a>
+<a class="bottomNav" href="/add-venue">Add a Venue</a>
+<a class="bottomNav" href="/list-venues">View All Venues</a>
+<a class="bottomNav" href="/">Home</a>

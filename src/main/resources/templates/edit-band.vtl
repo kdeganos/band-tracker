@@ -1,19 +1,22 @@
-<h1>Add a Band</h1>
+<h1>Edit: $band.getName()</h1>
 
 #if ($formError)
 <h3 class="animated flash error">Please be sure to enter a Band Name</h3>
 #end
 
-<form action="/add-band" method="post">
+<form action="/band/$band.getId()/edit" method="post">
   <label for="name">Band Name</label>
-  <input type="text" id="name" name="name">
+  <input type="text" id="name" name="name" value="$band.getName()">
 
-  <button id="submitBand" type="submit" class="btn btn-success">Submit</button>
+  <button type="submit" class="btn btn-success">Edit</button>
 </form>
+
+<a href="/band/$band.getId()/delete" class="btn btn-danger">Delete $band.getName()</a>
 <br>
 
 <hr>
 <a class="bottomNav" href="/list-bands">View All Bands</a>
+<a class="bottomNav" href="/add-band">Add a Band</a>
 <a class="bottomNav" href="/add-venue">Add a Venue</a>
 <a class="bottomNav" href="/list-venues">View All Venues</a>
 <a class="bottomNav" href="/">Home</a>
