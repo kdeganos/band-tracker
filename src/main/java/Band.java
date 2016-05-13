@@ -101,16 +101,16 @@ public class Band {
     }
   }
 
-  // public void removeVenue(int venueId) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String removeQuery = "DELETE FROM bands_venues WHERE venue_id=:venue_id AND band_id=:band_id;";
-  //     con.createQuery(removeQuery)
-  //       .addParameter("venue_id", venueId)
-  //       .addParameter("band_id", this.id)
-  //       .executeUpdate();
-  //   }
-  // }
-  // 
+  public void removeVenue(int venueId) {
+    try(Connection con = DB.sql2o.open()) {
+      String removeQuery = "DELETE FROM bands_venues WHERE venue_id=:venue_id AND band_id=:band_id;";
+      con.createQuery(removeQuery)
+        .addParameter("venue_id", venueId)
+        .addParameter("band_id", this.id)
+        .executeUpdate();
+    }
+  }
+  
   // public List<Venue> listAvailableVenues() {
   //   try(Connection con = DB.sql2o.open()) {
   //     String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id != venues.id) WHERE bands.id = :id;";
