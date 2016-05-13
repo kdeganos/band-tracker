@@ -99,4 +99,19 @@ public class BandTest {
     testBand.removeVenue(testVenue.getId());
     assertEquals(0, testBand.getVenues().size());
   }
+
+  @Test
+  public void search_findSetOfBandsByKeyword_list() {
+    Band testBand = new Band("abcde");
+    testBand.save();
+    Band testBand2 = new Band("cdefg");
+    testBand2.save();
+    Band testBand3 = new Band("vwxyz");
+    testBand3.save();
+    Band testBand4 = new Band("rstuvwx");
+    testBand4.save();
+    List<Band> testSearch = Band.search("vWx");
+    assertTrue(testSearch.get(0).equals(testBand3));
+    assertEquals(testSearch.size(), 2);
+  }
 }

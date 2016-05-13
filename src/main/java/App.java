@@ -210,5 +210,16 @@ public class App {
       model.put("template", "templates/list-venues.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    post("/search", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String query = request.queryParams("search");
+
+      model.put("query", query);
+      model.put("bands", Band.search(query));
+      model.put("venues", Venue.search(query));
+      model.put("template", "templates/search-results.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }

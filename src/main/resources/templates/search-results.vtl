@@ -1,0 +1,31 @@
+<h1>Search Results: "$query"</h1>
+
+#if(!($bands.size() > 0 || $venues.size() > 0))
+  <h3 class="animated flash error">No matching results</h3>
+#end
+
+#if($bands.size() > 0)
+  <h4>Bands:</h4>
+  #foreach($band in $bands)
+    <a href="/band/$band.getId()">$band.getName()</a>
+    <br>
+  #end
+#end
+
+#if($venues.size() > 0)
+  <h4>Venues:</h4>
+  #foreach($venue in $venues)
+    <a href="/venue/$venue.getId()">$venue.getName()</a>
+    <br>
+  #end
+#end
+
+<br>
+
+<hr>
+
+<a class="bottomNav" href="/list-bands">View All Bands</a>
+<a class="bottomNav" href="/add-band">Add a Band</a>
+<a class="bottomNav" href="/add-venue">Add a Venue</a>
+<a class="bottomNav" href="/list-venues">View All Venues</a>
+<a class="bottomNav" href="/">Home</a>

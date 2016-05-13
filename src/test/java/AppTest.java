@@ -121,4 +121,18 @@ public class AppTest extends FluentTest{
     click(".btn-danger");
     assertThat(pageSource()).doesNotContain("Name 1");
   }
+
+  @Test public void search() {
+    Band testBand = new Band ("Name 1");
+    testBand.save();
+    Venue testVenue = new Venue ("Name 1");
+    testVenue.save();
+    Venue testVenue2 = new Venue ("Name 2");
+    testVenue2.save();
+    goTo("http://localhost:4567/");
+    fill("#search").with("e 1");
+    submit(".btn-info");
+    assertThat(pageSource()).doesNotContain("Name 2");
+    assertThat(pageSource()).contains("Name 1");
+  }
 }
