@@ -86,21 +86,31 @@ public class Venue {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
       con.createQuery(sql)
-        .addParameter("band_id", this.id)
-        .addParameter("venue_id", newBand.getId())
+        .addParameter("venue_id", this.id)
+        .addParameter("band_id", newBand.getId())
         .executeUpdate();
     }
   }
 
   public List<Band> getBands() {
     try(Connection con = DB.sql2o.open()) {
-      String joinQuery = "SELECT bands.* FROM venues JOIN bands_bands ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.band_id = bands.id) WHERE  venues.id = :id;";
+      String joinQuery = "SELECT bands.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.band_id = bands.id) WHERE venues.id = :id;";
       return con.createQuery(joinQuery)
         .addParameter("id" , this.id)
         .executeAndFetch(Band.class);
     }
   }
-  //
+
+  public void removeBand(int bandId) {
+    try(Connection con = DB.sql2o.open()) {
+      String removeQuery = "DELETE FROM bands_venues WHERE venue_id=:venue_id AND band_id=:band_id;";
+      con.createQuery(removeQuery)
+        .addParameter("band_id", bandId)
+        .addParameter("venue_id", this.id)
+        .executeUpdate();
+    }
+  }
+
   // public List<Venue> listAvailableVenues() {
   //   try(Connection con = DB.sql2o.open()) {
   //     String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id != venues.id) WHERE bands.id = :id;";
@@ -110,15 +120,6 @@ public class Venue {
   //   }
   // }
   //
-  // public void removeVenue(int venueId) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String removeQuery = "DELETE FROM bands_venues WHERE venue_id=:venue_id AND band_id=:band_id;";
-  //     con.createQuery(removeQuery)
-  //       .addParameter("venue_id", venueId)
-  //       .addParameter("band_id", this.id)
-  //       .executeUpdate();
-  //   }
-  // }
 
   public static List<Venue> search(String searchQuery) {
     try(Connection con = DB.sql2o.open()) {
