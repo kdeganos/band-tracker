@@ -54,5 +54,30 @@ public class App {
       model.put("template", "templates/list-venues.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    get("/add-venue", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/add-venue.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/add-venue", (request, response) -> {
+      String name = request.queryParams("name");
+
+      Venue newVenue = new Venue(name);
+      newVenue.save();
+
+      response.redirect("/venue/" + newVenue.getId());
+      return null;
+    });
+
+    get("/venue/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int venueId = Integer.parseInt(request.params(":id"));
+      Venue venue = Venue.find(venueId);
+      model.put("venue", venue);
+      model.put("template", "templates/venue.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }
