@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.sql2o.*;
 
-public class Band {
+public class Venue {
 
   private int id;
   private String name;
 
-  public Band(String name) {
+  public Venue(String name) {
     this.name = name;
   }
 
@@ -19,27 +19,27 @@ public class Band {
     return this.id;
   }
 
-  public static List<Band> all() {
+  public static List<Venue> all() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM bands;";
+      String sql = "SELECT * FROM venues;";
       return con.createQuery(sql)
-      .executeAndFetch(Band.class);
+      .executeAndFetch(Venue.class);
     }
   }
 
-  @Override public boolean equals(Object otherBand) {
-    if(!(otherBand instanceof Band)) {
+  @Override public boolean equals(Object otherVenue) {
+    if(!(otherVenue instanceof Venue)) {
       return false;
     } else {
-      Band newBand = (Band) otherBand;
-      return newBand.getName().equals(this.name) &&
-        newBand.getId() == this.id;
+      Venue newVenue = (Venue) otherVenue;
+      return newVenue.getName().equals(this.name) &&
+        newVenue.getId() == this.id;
     }
   }
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO bands (name) VALUES (:name);";
+      String sql = "INSERT INTO venues (name) VALUES (:name);";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .executeUpdate()
@@ -47,19 +47,19 @@ public class Band {
     }
   }
 
-  public static Band find(int id) {
+  public static Venue find(int id) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM bands WHERE id=:id;";
+      String sql = "SELECT * FROM venues WHERE id=:id;";
       return con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetchFirst(Band.class);
+        .executeAndFetchFirst(Venue.class);
     }
   }
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String deleteBand = "DELETE FROM bands WHERE id=:id;";
-      con.createQuery(deleteBand)
+      String deleteVenue = "DELETE FROM venues WHERE id=:id;";
+      con.createQuery(deleteVenue)
         .addParameter("id", id)
         .executeUpdate();
 
@@ -73,7 +73,7 @@ public class Band {
 
   public void update(String new_name) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE bands SET name=:new_name WHERE id=:id;";
+      String sql = "UPDATE venues SET name=:new_name WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("new_name", new_name)
         .addParameter("id", this.id)
@@ -81,22 +81,22 @@ public class Band {
     }
   }
 
-  public void addVenue(Venue newVenue) {
+  public void addBand(Band newBand) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
       con.createQuery(sql)
         .addParameter("band_id", this.id)
-        .addParameter("venue_id", newVenue.getId())
+        .addParameter("venue_id", newBand.getId())
         .executeUpdate();
     }
   }
 
-  public List<Venue> getVenues() {
+  public List<Band> getBands() {
     try(Connection con = DB.sql2o.open()) {
-      String joinQuery = "SELECT venues.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE venues.id = :id;";
+      String joinQuery = "SELECT bands.* FROM venues JOIN bands_bands ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.band_id = bands.id) WHERE  venues.id = :id;";
       return con.createQuery(joinQuery)
         .addParameter("id" , this.id)
-        .executeAndFetch(Venue.class);
+        .executeAndFetch(Band.class);
     }
   }
   //
@@ -119,12 +119,12 @@ public class Band {
   //   }
   // }
 
-  public static List<Band> search(String searchQuery) {
+  public static List<Venue> search(String searchQuery) {
     try(Connection con = DB.sql2o.open()) {
       String search = "SELECT * FROM bands WHERE lower(band_name) LIKE :searchQuery;";
       return con.createQuery(search)
         .addParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
-        .executeAndFetch(Band.class);
+        .executeAndFetch(Venue.class);
     }
   }
 }
