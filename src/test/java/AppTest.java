@@ -41,12 +41,12 @@ public class AppTest extends FluentTest{
     assertThat(pageSource()).contains("Name 1");
   }
 
-  // @Test
-  // public void addBand() {
-  //   goTo("http://localhost:4567/");
-  //   click("a", withText("Add A Band"));
-  //   fill("#name").with("Name 1");
-  //   submit("#submitBand");
-  //   assertThat(pageSource()).contains("Name 1");
-  // }
+  @Test
+  public void addBand() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add A Band"));
+    fill("#name").with("Name 1");
+    submit("#submitBand");
+    assertThat(pageSource()).contains("Name 1");
+  }
 }
