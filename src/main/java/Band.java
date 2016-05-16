@@ -64,9 +64,9 @@ public class Band {
         .addParameter("id", id)
         .executeUpdate();
 
-      String deleteJoin = "DELETE FROM bands_venues WHERE id=:id;";
+      String deleteJoin = "DELETE FROM bands_venues WHERE band_id=:band_id;";
       con.createQuery(deleteJoin)
-        .addParameter("id", id)
+        .addParameter("band_id", id)
         .executeUpdate();
     }
 
